@@ -1,0 +1,71 @@
+version: '3'
+services:
+  tomcat:
+   container_name: tomcat
+   image: 'tomcat:9.0.37-jdk8-openjdk'
+   restart: always
+   ports:
+     - "8080:8080"
+   expose:
+     - "8080"
+       #networks:
+       #b:
+       #ipv4_address: 10.128.0.3
+
+  pg10:
+   container_name: postgres
+   image: 'postgres:10'
+   restart: always
+   ports:
+     - "5432:5432"
+   expose:
+     - "5432"
+       #networks:
+       #b:
+       #ipv4_address: 10.128.0.4
+   environment:
+     - POSTGRES_DB=sample
+     - POSTGRES_PASSWORD=welcome@123
+     
+
+  rabbit:
+   container_name: rabbitserver
+   hostname: rabbit
+   image: 'rabbitmq:3.6.15-management'
+   restart: always
+   ports:
+     - "5672:5672"
+     - "15672:15672"
+   expose:
+     - "5672"
+     - "15672"
+       #networks:
+       #b:
+       #ipv4_address: 10.128.0.5
+
+   environment:
+     - RABBITMQ_DEFAULT_USER=admin
+     - RABBITMQ_DEFAULT_PASS=admin
+    
+  clickhouse:
+   container_name: clickhouse
+   image: 'yandex/clickhouse-server:19.4'
+   restart: always
+   ports:
+     - "8123:8123"
+     - "9000:9000"
+   expose:
+     - "8123"
+     - "9000"
+  
+       #networks:
+       #b:
+       #ipv4_address: 10.128.0.6
+
+
+       #networks:
+       #b:
+       #driver: bridge
+       #ipam:
+       #config:
+       #- subnet: 10.128.0.0/20
